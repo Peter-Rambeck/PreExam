@@ -8,6 +8,7 @@ package entities.book;
 import dto.book.BookDTO;
 import entities.library.Library;
 import entities.loan.Loan;
+import entities.reservation.Reservation;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +45,12 @@ public class Book implements Serializable {
         cascade = CascadeType.PERSIST
     )
      private List<Loan> loans; 
+     
+     @OneToMany(
+        mappedBy = "book",
+        cascade = CascadeType.PERSIST
+    )
+     private List<Reservation> reservations; 
     
     @ManyToOne(optional = true)
     private Library library;

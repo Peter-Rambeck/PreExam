@@ -7,6 +7,7 @@ package entities.loan;
 
 import entities.book.Book;
 import entities.library.Library;
+import entities.member.Member;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -38,6 +39,9 @@ public class Loan implements Serializable {
     
     @ManyToOne(optional = true)
     private Book book;
+    
+    @ManyToOne(optional = true)
+    private Member member;
 
     public Loan(Date checkoutDate, Date dueDate, Date returnedDate) {
         this.checkoutDate = checkoutDate;
