@@ -7,13 +7,17 @@ package entities.book;
 
 import dto.book.BookDTO;
 import entities.library.Library;
+import entities.loan.Loan;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -34,6 +38,12 @@ public class Book implements Serializable {
     private String publisher;
     //@Temporal(javax.persistence.TemporalType.DATE)
     private String publishYear;
+    
+     @OneToMany(
+        mappedBy = "book",
+        cascade = CascadeType.PERSIST
+    )
+     private List<Loan> loans; 
     
     @ManyToOne(optional = true)
     private Library library;
@@ -105,4 +115,13 @@ public class Book implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" + "id=" + id + ", isbn=" + isbn + ", title=" + title + ", authors=" + authors + ", publisher=" + publisher + ", publishYear=" + publishYear + ", library=" + library + '}';
+    }
+    
+    
+    
+    
 }
