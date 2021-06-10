@@ -7,6 +7,7 @@ package facades;
 
 import dto.book.BookDTO;
 import entities.book.Book;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.WebApplicationException;
@@ -88,6 +89,12 @@ public class BookFacade {
             em.close();
         }
 
+    }
+    
+    public List<BookDTO> getAll() throws WebApplicationException {
+        EntityManager em = emf.createEntityManager();
+        List<Book> books = em.createQuery("SELECT r FROM Book r", Book.class).getResultList();
+        return BookDTO.getDtos(books);
     }
 
 }

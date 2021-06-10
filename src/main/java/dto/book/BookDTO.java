@@ -45,6 +45,12 @@ public class BookDTO {
         allBooks.forEach(book -> allBooksDTO.add(new BookDTO(book)));
         return allBooksDTO;
     }
+    
+     public static List<BookDTO> getDtos(List<Book> books){
+        List<BookDTO> booksdtos = new ArrayList();
+        books.forEach(book->booksdtos.add(new BookDTO(book)));
+        return booksdtos;
+    }
 
     public Long getId() {
         return id;
