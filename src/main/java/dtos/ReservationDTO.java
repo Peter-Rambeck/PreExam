@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dto.reservation;
+package dtos;
 
-import entities.reservation.Reservation;
+import entities.Reservation;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

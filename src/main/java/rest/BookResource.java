@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import dtos.BookDTO;
 import dtos.Example.AnimeDTO;
 import dtos.Example.BeerDTO;
 import dtos.Example.CatDTO;
@@ -10,7 +11,9 @@ import dtos.Example.CombinedDTO;
 import dtos.Example.JokeDTO;
 import dtos.Example.WeatherDTO;
 import dtos.RenameMeDTO;
+import entities.Book;
 import entities.User;
+import facades.BookFacade;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import utils.EMF_Creator;
 import utils.HttpUtil;
@@ -36,6 +40,8 @@ public class BookResource {
 
     Gson gson = new Gson();
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
+    private static final BookFacade FACADE = BookFacade.getBookFacade(EMF);
+
     @Context
     private UriInfo context;
 
@@ -48,20 +54,23 @@ public class BookResource {
         return "{\"msg\":\"Hello anonymous\"}";
     }
 
+        //Just to verify if the database is setup
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("populate")
+    public Response poplate() {
+        FACADE.populate();
+        return Response.ok("a few books").build();
+    }
+    
+    
+    
     //Just to verify if the database is setup
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("all")
-    public String allUsers() {
-
-        EntityManager em = EMF.createEntityManager();
-        try {
-            TypedQuery<User> query = em.createQuery("select u from User u", entities.User.class);
-            List<User> users = query.getResultList();
-            return "[" + users.size() + "]";
-        } finally {
-            em.close();
-        }
+    public List<BookDTO> getAllBooks() {
+        return FACADE.getAllBooks();
     }
 
     @GET

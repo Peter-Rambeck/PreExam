@@ -6,7 +6,10 @@
 package facades;
 
 import dtos.BookDTO;
+import dtos.LibraryDTO;
 import entities.Book;
+import entities.Library;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,45 +19,59 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author peter
  */
-public class BookFacade {
+public class LibraryFacade {
 
     private static EntityManagerFactory emf;
-    private static BookFacade instance;
+    private static LibraryFacade instance;
 
-    private BookFacade() {
+    private LibraryFacade() {
     }
 
-    public static BookFacade getBookFacade(EntityManagerFactory _emf) {
+    public static LibraryFacade getLibraryFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            instance = new BookFacade();
+            instance = new LibraryFacade();
         }
         return instance;
     }
 
-    public BookDTO createBook(BookDTO bookDTO) {
+    public LibraryDTO addBook(BookDTO bookDTO) {
 
         EntityManager em = emf.createEntityManager();
-        Book book = new Book(bookDTO.getIsbn(), bookDTO.getTitle(), bookDTO.getAuthors(), bookDTO.getPublisher(), bookDTO.getPublishYear());
+        int isbn = bookDTO.getIsbn();
+        String name = "bogormen";
 
         try {
+
+            Book book = (Book) em
+                    .createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn")
+                    .setParameter("isbn", isbn)
+                    .getSingleResult();
+
+            Library library = (Library) em
+                    .createQuery("SELECT l FROM Library l WHERE l.name = :name")
+                    .setParameter("name", name)
+                    .getSingleResult();
+
             em.getTransaction().begin();
-            em.persist(book);
+
+            library.addBook(book);
             em.getTransaction().commit();
+            // return new LibraryDTO(library);
         } catch (Exception e) {
-            throw new WebApplicationException("Book already exist");
+            throw new WebApplicationException();
         } finally {
             em.close();
         }
-        return new BookDTO(book);
+        return new LibraryDTO(name);
+
     }
-    
-    
+
     public List<BookDTO> getAllBooks() {
-        
+
         EntityManager em = emf.createEntityManager();
-        
-        try{
+
+        try {
             em.getTransaction().begin();
             List<Book> books = em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
             return BookDTO.getAllBookDtoes(books);
@@ -72,13 +89,13 @@ public class BookFacade {
 
         try {
             Book olBook = (Book) em
-                    .createQuery("SELECT b FROM book WHERE b.isbn = :isbn")
+                    .createQuery("SELECT b FROM b book WHERE b.isbn = :isbn")
                     .setParameter("isbn", bookDTO.getIsbn())
                     .getSingleResult();
-            
+
             System.out.println(olBook);
-            
-                    } catch (Exception e) {
+
+        } catch (Exception e) {
             throw new WebApplicationException("Book doesn not exist");
         } finally {
             em.close();
@@ -89,7 +106,7 @@ public class BookFacade {
     public void deleteBook(BookDTO bookDTO) {
 
         EntityManager em = emf.createEntityManager();
-        
+
         Book book = new Book(bookDTO.getIsbn(), bookDTO.getTitle(), bookDTO.getAuthors(), bookDTO.getPublisher(), bookDTO.getPublishYear());
 
         try {
@@ -105,15 +122,15 @@ public class BookFacade {
         }
 
     }
-    
+
     public void populate() {
-        
-         EntityManager em = emf.createEntityManager();
-         Book book1 = new Book(1, "Java", "nogen", "Politikken", "2021");
-         Book book2 = new Book(2, "Java", "nogen", "Politikken", "2021");
-         Book book3 = new Book(3, "Java", "nogen", "Politikken", "2021");
-         
-         try {
+
+        EntityManager em = emf.createEntityManager();
+        Book book1 = new Book(1, "Java", "nogen", "Politikken", "2021");
+        Book book2 = new Book(2, "Java", "nogen", "Politikken", "2021");
+        Book book3 = new Book(3, "Java", "nogen", "Politikken", "2021");
+
+        try {
             em.getTransaction().begin();
             // em.find isbn == null 
 
@@ -126,8 +143,7 @@ public class BookFacade {
         } finally {
             em.close();
         }
-        
+
     }
-    
-    
+
 }

@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities.member;
+package entities;
 
-import entities.loan.Loan;
-import entities.reservation.Reservation;
+import entities.Loan;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -25,7 +24,7 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  * @author peter
  */
-@Entity
+// @Entity
 public class Member implements Serializable {
 
     private static final long serialVersionUID = 1L;

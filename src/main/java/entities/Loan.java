@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities.loan;
+package entities;
 
-import entities.book.Book;
-import entities.library.Library;
-import entities.member.Member;
+import entities.Book;
+import entities.Library;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -41,7 +40,7 @@ public class Loan implements Serializable {
     private Book book;
     
     @ManyToOne(optional = true)
-    private Member member;
+    private User user;
 
     public Loan(Date checkoutDate, Date dueDate, Date returnedDate) {
         this.checkoutDate = checkoutDate;

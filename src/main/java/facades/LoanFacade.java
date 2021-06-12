@@ -1,8 +1,8 @@
 package facades;
 
-import dto.loan.LoanDTO;
+import dtos.LoanDTO;
 import dtos.RenameMeDTO;
-import entities.loan.Loan;
+import entities.Loan;
 import entities.renameme.RenameMe;
 import entities.renameme.RenameMeRepository;
 import java.util.List;

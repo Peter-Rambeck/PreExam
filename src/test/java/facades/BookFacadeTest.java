@@ -5,10 +5,10 @@
  */
 package facades;
 
-import dto.book.BookDTO;
+import dtos.BookDTO;
 import entities.Role;
 import entities.User;
-import entities.book.Book;
+import entities.Book;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterEach;

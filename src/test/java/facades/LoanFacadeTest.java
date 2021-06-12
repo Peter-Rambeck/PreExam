@@ -5,9 +5,9 @@
  */
 package facades;
 
-import dto.loan.LoanDTO;
-import entities.book.Book;
-import entities.loan.Loan;
+import dtos.LoanDTO;
+import entities.Book;
+import entities.Loan;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

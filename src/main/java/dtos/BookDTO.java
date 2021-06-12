@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dto.book;
+package dtos;
 
-import entities.book.Book;
+import entities.Book;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -41,16 +42,22 @@ public class BookDTO {
     }
 
     public static List<BookDTO> getAllBookDtoes(List<Book> allBooks) {
-        List<BookDTO> allBooksDTO = new ArrayList<>();
-        allBooks.forEach(book -> allBooksDTO.add(new BookDTO(book)));
-        return allBooksDTO;
+        
+         return allBooks.stream()
+            .map(book -> new BookDTO(book))
+            .collect(Collectors.toList());
+        
+        
+//        List<BookDTO> allBooksDTO = new ArrayList<>();
+//        allBooks.forEach(book -> allBooksDTO.add(new BookDTO(book)));
+//        return allBooksDTO;
     }
     
-     public static List<BookDTO> getDtos(List<Book> books){
-        List<BookDTO> booksdtos = new ArrayList();
-        books.forEach(book->booksdtos.add(new BookDTO(book)));
-        return booksdtos;
-    }
+//     public static List<BookDTO> getDtos(List<Book> books){
+//        List<BookDTO> booksdtos = new ArrayList();
+//        books.forEach(book->booksdtos.add(new BookDTO(book)));
+//        return booksdtos;
+//    }
 
     public Long getId() {
         return id;

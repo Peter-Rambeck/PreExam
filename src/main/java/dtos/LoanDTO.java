@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dto.loan;
+package dtos;
 
-import entities.loan.Loan;
+import entities.Loan;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

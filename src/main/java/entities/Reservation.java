@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities.reservation;
+package entities;
 
-import entities.book.Book;
-import entities.member.Member;
+import entities.Book;
+import entities.Member;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ public class Reservation implements Serializable {
     private Book book;
 
     @ManyToOne(optional = true)
-    private Member member;
+    private User user;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date expirationDate;

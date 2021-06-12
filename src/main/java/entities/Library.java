@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities.library;
+package entities;
 
-import dto.book.BookDTO;
+import dtos.BookDTO;
 import entities.Role;
-import entities.book.Book;
+import entities.Book;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -30,22 +31,38 @@ public class Library implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String name;
 
     @OneToMany(
-        mappedBy = "library",
-        cascade = CascadeType.PERSIST
+            mappedBy = "library",
+            cascade = CascadeType.PERSIST
     )
-     private List<Book> books;
-    
-    
-    public static List<Book> getAllBooks(List<BookDTO> allBooks) {
-        List<Book> books = new ArrayList<>();
-        allBooks.forEach(book -> books.add(new Book(book)));
+    private List<Book> books;
+
+    public void addBook(Book book) {
+        if (book != null) {
+            this.books.add(book);
+            book.setLibrary(this);
+        } else {
+            throw new WebApplicationException();
+        }
+    }
+
+    public List<Book> getBooks() {
         return books;
     }
-    
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+//    public static List<Book> getAllBooks(List<BookDTO> allBooks) {
+//        List<Book> books = new ArrayList<>();
+//        allBooks.forEach(book -> books.add(new Book(book)));
+//        return books;
+//    }
+
     public Library(String name) {
         this.name = name;
     }
@@ -60,8 +77,7 @@ public class Library implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -70,5 +86,4 @@ public class Library implements Serializable {
         this.id = id;
     }
 
-    
 }

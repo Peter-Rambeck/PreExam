@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dto.member;
+package dtos;
 
-import entities.member.Member;
+import entities.Member;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;

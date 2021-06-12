@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities.book;
+package entities;
 
-import dto.book.BookDTO;
-import entities.library.Library;
-import entities.loan.Loan;
-import entities.reservation.Reservation;
+import dtos.BookDTO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -121,6 +118,30 @@ public class Book implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 
     @Override
