@@ -21,10 +21,12 @@ import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -63,7 +65,16 @@ public class BookResource {
         return Response.ok("a few books").build();
     }
     
-    
+    @POST
+    @Path("/create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createBook(String jsonBody) {
+        
+       BookDTO bookDTO = gson.fromJson(jsonBody, BookDTO.class);
+       FACADE.createBook(bookDTO);
+       return  Response.ok(bookDTO).build();
+    }
+
     
     //Just to verify if the database is setup
     @GET
@@ -72,7 +83,16 @@ public class BookResource {
     public List<BookDTO> getAllBooks() {
         return FACADE.getAllBooks();
     }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/edit")
+    public BookDTO editBooks(String jsonBody) {
+        BookDTO bookDTO = gson.fromJson(jsonBody, BookDTO.class);
+        return FACADE.editBook(bookDTO);
+    }
 
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("user")

@@ -17,6 +17,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.ws.rs.WebApplicationException;
 
@@ -25,6 +27,9 @@ import javax.ws.rs.WebApplicationException;
  * @author peter
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Library.deleteAllRows", query = "DELETE from Library")
+})
 public class Library implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -28,6 +28,8 @@ public class LibraryFacadeTest {
 
     private static EntityManagerFactory emf;
     private static LibraryFacade facade;
+    
+    Book book1;
 
     public LibraryFacadeTest() {
     }
@@ -40,7 +42,7 @@ public class LibraryFacadeTest {
 
         EntityManager em = emf.createEntityManager();
 
-        Book book1 = new Book(1, "Java", "nogen", "Politikken", "2021");
+        book1 = new Book(1, "Java", "nogen", "Politikken", "2021");
         Book book2 = new Book(2, "Java", "nogen", "Politikken", "2021");
         Book book3 = new Book(3, "Java", "nogen", "Politikken", "2021");
         Library library = new Library("bogormen");
@@ -57,17 +59,26 @@ public class LibraryFacadeTest {
         } finally {
             em.close();
         }
-}
-
-@AfterEach
-        public void tearDown() {
     }
 
-   
+    @AfterEach
+    public void tearDown() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createNamedQuery("Book.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Library.deleteAllRows").executeUpdate();
+
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
     @Test
-        public void testAddBook() {
-        
-        BookDTO bookDTO = new BookDTO(1, "Java", "nogen", "Politikken", "2021");
+    public void testAddBook() {
+
+        BookDTO bookDTO = new BookDTO((book1));
         facade.addBook(bookDTO);
         assertEquals(1, bookDTO.getIsbn());
     }
@@ -76,4 +87,4 @@ public class LibraryFacadeTest {
 //        LibraryFacade instance = null;
 //        instance.addBook(bookDTO);
 //        fail("The test case is a prototype.");
-    }
+}

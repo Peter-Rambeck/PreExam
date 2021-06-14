@@ -57,5 +57,13 @@ public class LibraryResource {
         LibraryDTO libraryDTO = FACADE.addBook(bookDTO);
         return Response.ok("Dunkeren").build();
     }
+    
+    @GET
+    @Path("/getlibrary")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLibrary() {
+        LibraryDTO libraryDTO = FACADE.getLibrary();
+        return Response.ok(gson.toJson(libraryDTO)).build();
+    }
 
 }

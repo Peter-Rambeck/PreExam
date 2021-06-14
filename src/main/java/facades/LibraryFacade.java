@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,7 +25,7 @@ public class LibraryFacade {
     private static EntityManagerFactory emf;
     private static LibraryFacade instance;
 
-    private LibraryFacade() {
+    LibraryFacade() {
     }
 
     public static LibraryFacade getLibraryFacade(EntityManagerFactory _emf) {
@@ -35,11 +36,30 @@ public class LibraryFacade {
         return instance;
     }
 
+    public LibraryDTO getLibrary() {
+
+        EntityManager em = emf.createEntityManager();
+        Library library;
+        try {
+            library = (Library) em
+                    .createQuery("SELECT l FROM Library l")
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new WebApplicationException();
+        } finally {
+            em.close();
+        }
+        return new LibraryDTO(library);
+
+    }
+
     public LibraryDTO addBook(BookDTO bookDTO) {
 
         EntityManager em = emf.createEntityManager();
         int isbn = bookDTO.getIsbn();
         String name = "bogormen";
+        
+        System.out.println(bookDTO);
 
         try {
 
@@ -85,7 +105,7 @@ public class LibraryFacade {
     public BookDTO editBook(BookDTO bookDTO) {
 
         EntityManager em = emf.createEntityManager();
-        Book book = new Book(bookDTO.getIsbn(), bookDTO.getTitle(), bookDTO.getAuthors(), bookDTO.getPublisher(), bookDTO.getPublishYear());
+     
 
         try {
             Book olBook = (Book) em
@@ -93,14 +113,14 @@ public class LibraryFacade {
                     .setParameter("isbn", bookDTO.getIsbn())
                     .getSingleResult();
 
-            System.out.println(olBook);
+              return new BookDTO(olBook);
 
         } catch (Exception e) {
             throw new WebApplicationException("Book doesn not exist");
         } finally {
             em.close();
         }
-        return new BookDTO(book);
+      
     }
 
     public void deleteBook(BookDTO bookDTO) {
