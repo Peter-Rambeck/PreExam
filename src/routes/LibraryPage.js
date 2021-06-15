@@ -8,7 +8,9 @@ function LibraryPage() {
   const [library, setLibrary] = useState();
 
   React.useEffect(() => {
-    fetchData("http://localhost:8080/jpareststarter/api/library/getlibrary")
+    fetchData(
+      "https://peterrambeckandersen.com/tomcat/insession-starter/api/library/getlibrary"
+    )
       .then((data) => setLibrary(data))
       .catch((err) => console.log(err));
   }, []);

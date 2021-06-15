@@ -1,6 +1,8 @@
-const USER_BASE = "http://localhost:8080/jpareststarter/api";
+const USER_BASE =
+  "https://peterrambeckandersen.com/tomcat/insession-starter/api/";
 
-const INFO_BASE = "http://localhost:8080/jpareststarter/api";
+const INFO_BASE =
+  "https://peterrambeckandersen.com/tomcat/insession-starter/api/";
 
 const USER = {
   LOGIN: `${USER_BASE}/login`,

@@ -7,6 +7,7 @@ import LibraryPage from "./routes/LibraryPage";
 import BooksPage from "./routes/BooksPage";
 import MuchDataPage from "./routes/MuchDataPage";
 import UserPage from "./routes/UserPage";
+import CRUD from "./routes/CRUD";
 
 function AuthenticatedApp(props) {
   const { logout, user } = props;
@@ -31,6 +32,9 @@ function AuthenticatedApp(props) {
         </Route>
         <Route path="/books">
           <BooksPage />
+        </Route>
+        <Route path="/addBook">
+          <CRUD />
         </Route>
         <Route path="/">
           <h1>404</h1>

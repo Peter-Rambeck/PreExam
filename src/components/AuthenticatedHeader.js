@@ -23,6 +23,9 @@ function AuthenticatedHeader(props) {
           <LinkContainer to="/books">
             <Nav.Link>Books</Nav.Link>
           </LinkContainer>
+          <LinkContainer to="/addBook">
+            <Nav.Link>Update book</Nav.Link>
+          </LinkContainer>
           <LinkContainer to="/user">
             <Nav.Link>User data</Nav.Link>
           </LinkContainer>
