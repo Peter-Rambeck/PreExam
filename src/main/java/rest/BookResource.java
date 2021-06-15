@@ -79,7 +79,7 @@ public class BookResource {
     //Just to verify if the database is setup
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("all")
+    @Path("/all")
     public List<BookDTO> getAllBooks() {
         return FACADE.getAllBooks();
     }
